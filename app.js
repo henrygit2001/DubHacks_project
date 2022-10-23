@@ -1,8 +1,27 @@
 var express = require("express");
 var path = require("path");
+var bodyParser = require('body-parser');
 
 var app = express();
 app.set("port", process.env.PORT || 3000);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
+//Routes to overview page and study Page
+let overview = require('./overview.js');
+//let study = require ('./study.js');
+app.set('views', './views');
+app.set('view engine', 'ejs');
+
+app.use(overview);
+//app.use('/study', study);
+
+app.post('', (req,res) =>{
+    const body = req.body;
+
+    res.render('landingPage', {title: "Big Large Heads", upload: "Upload study set!", copyPaste: "or Copy/Paste:"});
+})
 
 app.listen(app.get("port"), function(){
     console.log("Server fired up at:" + app.get("port"));

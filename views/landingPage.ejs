@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div class= "boxed">
+    <h2 class= "heading"><%= title %></h2>
+    <h3 class= "heading"><%= upload %></h3>
+    <h3 class= "heading"><%= copyPaste %></h3>
+    <label class = "heading">Text box:</label><br>
+    <input type="text" id="textBox" name="fname"><br>
+    <button type="submit" onsubmit= "passData()">Submit</button>
+</div>
+</body>
+<style>
+    input {
+        background-color : white;
+        border-color: black;
+        height : 500px;
+        width: 200px;
+        
+    }
+    .boxed{
+        border: 1px solid black ;
+    }
+    .heading{
+        text-align: center;
+    }
+</style>
+<script>
+    let passData = () => {
+        const data = document.getElementById("textBox").value;
+        const formData = new FormData();
+        formData.append('textValue', data);
+        const passingData = {
+            method: "POST",
+            data: formData
+        }
+        fetch("/", passingData).then((_res) => {alert("Success");})
+        .catch(() => {alert("Error")})
+    }
+</script>
+</html>
