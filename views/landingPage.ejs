@@ -12,36 +12,36 @@
     <h3 class= "heading"><%= upload %></h3>
     <h3 class= "heading"><%= copyPaste %></h3>
     <label class = "heading">Text box:</label><br>
-    <input type="text" id="textBox" name="fname"><br>
-    <button type="submit" onsubmit= "passData()">Submit</button>
+    <form id="form1">
+        <input type="text" id="textBox" name="textBox">
+        <button type = "submit" >Send Data</button>
+    </form>
 </div>
-</body>
-<style>
-    input {
-        background-color : white;
-        border-color: black;
-        height : 500px;
-        width: 200px;
-        
-    }
-    .boxed{
-        border: 1px solid black ;
-    }
-    .heading{
-        text-align: center;
-    }
-</style>
 <script>
-    let passData = () => {
-        const data = document.getElementById("textBox").value;
-        const formData = new FormData();
-        formData.append('textValue', data);
+    fm1= document.getElementById("form1");
+    fm1.addEventListener("submit", function(event){
+        let data = fm1.value;
+        event.preventDefault();
+        let formData = new FormData(fm1);
+        //formData.append('textValue', data);
+        for (let element of formData){
+            console.log(element);
+        }
         const passingData = {
             method: "POST",
-            data: formData
-        }
-        fetch("/", passingData).then((_res) => {alert("Success");})
-        .catch(() => {alert("Error")})
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify(formData),
+        };
+        fetch("/storeData/", passingData).then(data => console.log(data));
     }
-</script>
-</html>
+   )
+   </script>
+   </body>
+   <style>
+    input {
+    background-color : white;
+    border-color: black;
+    height : 500px;
+    width: 200px;
+    } .boxed{ border: 1px solid black ;     } .heading{ text-align: center;     } </style>
+   </html>

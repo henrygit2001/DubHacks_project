@@ -1,26 +1,29 @@
 var express = require("express");
-var path = require("path");
 var bodyParser = require('body-parser');
+const path = require("path");
+const {engine} = require('express-handlebars');
 
 var app = express();
 app.set("port", process.env.PORT || 3000);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 
 //Routes to overview page and study Page
-let overview = require('./overview.js');
+//const overview = require('./overview.js');
 //let study = require ('./study.js');
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
-app.use(overview);
+//app.use(overview);
 //app.use('/study', study);
 
-app.post('', (req,res) =>{
-    const body = req.body;
-
+app.get("/", (req,res) =>{
     res.render('landingPage', {title: "Big Large Heads", upload: "Upload study set!", copyPaste: "or Copy/Paste:"});
+})
+
+app.post("/storeData/", (req, res, next)=>{
+    console.log(req.body);
 })
 
 app.listen(app.get("port"), function(){
